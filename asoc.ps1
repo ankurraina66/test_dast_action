@@ -18,10 +18,9 @@ if($IsMacOS){
 }elseif($IsWindows){
   $Os = 'win'
 }
-
 $ClientType = "github-dast-$Os-$env:GITHUB_ACTION_REF"
 
-# Handle SSL validation based on ACCEPTSSL / ASOC_SKIP_CERT
+# Handle SSL validation
 $global:SkipCertParams = @{}
 
 if ($env:ASOC_SKIP_CERT -eq "false") {
@@ -32,6 +31,9 @@ if ($env:ASOC_SKIP_CERT -eq "false") {
 } else {
   Write-Host "SSL validation enabled (AppScan on Cloud / ASoC)"
 }
+
+$global:BaseAPIUrl = "$env:INPUT_BASEURL/api/v4"
+Write-Host "Using AppScan Base API URL: $global:BaseAPIUrl"
 
 Write-Host "Loading Library functions from asoc.ps1"
 
