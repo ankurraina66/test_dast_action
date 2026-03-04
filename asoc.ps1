@@ -37,8 +37,7 @@ if ($env:ASOC_SKIP_CERT -eq "false") {
 
 function Invoke-ASoCRestMethod {
     param(
-        [Parameter(ValueFromRemainingArguments=$true)]
-        $Params
+        [hashtable]$Params
     )
 
     if ($global:SkipCert) {
@@ -50,8 +49,7 @@ function Invoke-ASoCRestMethod {
 
 function Invoke-ASoCWebRequest {
     param(
-        [Parameter(ValueFromRemainingArguments=$true)]
-        $Params
+        [hashtable]$Params
     )
 
     if ($global:SkipCert) {
