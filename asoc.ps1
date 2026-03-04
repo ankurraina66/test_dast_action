@@ -216,7 +216,7 @@ function Run-ASoC-ScanCompletionChecker($scanID){
   $waitIntervalInSeconds = 15
 
   while(($scan_status -ne "Ready") -and ($counterTimerInSeconds -lt $env:INPUT_WAIT_FOR_ANALYSIS_TIMEOUT_MINUTES*60)){
-    $output = Invoke-RestMethod @params
+    $output = Invoke-RestMethod @params @global:SkipCertParams
     $scan_status = $output.Status
     Start-Sleep -Seconds $waitIntervalInSeconds
     $counterTimerInSeconds = $counterTimerInSeconds + $waitIntervalInSeconds
