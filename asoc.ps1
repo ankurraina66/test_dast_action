@@ -22,27 +22,17 @@ $ClientType = "github-dast-$Os-$env:GITHUB_ACTION_REF"
 
 # Handle SSL validation
 if ($env:ASOC_SKIP_CERT -eq "false") {
+
     Write-Host "ASOC_SKIP_CERT = false → SSL validation will be ignored (Non-Prod AppScan 360)"
 
-    # Disable SSL validation globally for this PowerShell session
-    add-type @"
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
-public class TrustAllCertsPolicy : ICertificatePolicy {
-    public bool CheckValidationResult(
-        ServicePoint srvPoint,
-        X509Certificate certificate,
-        WebRequest request,
-        int certificateProblem) {
-        return true;
-    }
-}
-"@
+    # Works in PowerShell 5 and 7
+    [System.Net.ServicePointManager]::ServerCertificateValidationCallback = { $true }
 
-    [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 }
 else {
+
     Write-Host "SSL validation enabled (AppScan on Cloud / ASoC)"
+
 }
 
 # =================================
