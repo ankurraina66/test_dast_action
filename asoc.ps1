@@ -37,25 +37,27 @@ if ($env:ASOC_SKIP_CERT -eq "false") {
 
 function Invoke-ASoCRestMethod {
     param(
-        [hashtable]$Params
+        [Parameter(ValueFromRemainingArguments=$true)]
+        $RestParams
     )
 
     if ($global:SkipCert) {
-        return Invoke-RestMethod @Params -SkipCertificateCheck
+        return Invoke-RestMethod @RestParams -SkipCertificateCheck
     } else {
-        return Invoke-RestMethod @Params
+        return Invoke-RestMethod @RestParams
     }
 }
 
 function Invoke-ASoCWebRequest {
     param(
-        [hashtable]$Params
+        [Parameter(ValueFromRemainingArguments=$true)]
+        $RestParams
     )
 
     if ($global:SkipCert) {
-        return Invoke-WebRequest @Params -SkipCertificateCheck
+        return Invoke-WebRequest @RestParams -SkipCertificateCheck
     } else {
-        return Invoke-WebRequest @Params
+        return Invoke-WebRequest @RestParams
     }
 }
 
