@@ -18,6 +18,7 @@ if($IsMacOS){
 }elseif($IsWindows){
   $Os = 'win'
 }
+
 $ClientType = "github-dast-$Os-$env:GITHUB_ACTION_REF"
 
 # Handle SSL validation
