@@ -62,11 +62,27 @@ function Login-ASoC {
 
 
   #$Members = Invoke-RestMethod @params
-  if ($global:SkipCert) {
-    $Members = Invoke-RestMethod @params -SkipCertificateCheck
-  } else {
-    $Members = Invoke-RestMethod @params
-  }
+  try {
+
+    if ($global:SkipCert) {
+        $Members = Invoke-RestMethod @params -SkipCertificateCheck
+    }
+    else {
+        $Members = Invoke-RestMethod @params
+    }
+
+}
+catch {
+
+    Write-Host "===== LOGIN ERROR ====="
+    Write-Host $_
+    
+    if ($_.ErrorDetails.Message) {
+        Write-Host $_.ErrorDetails.Message
+    }
+
+    throw
+}
   Write-Debug ($Members | Format-Table | Out-String)
 
   #Write-Host "Auth successful - Token received: $Members.token"
