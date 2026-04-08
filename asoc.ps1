@@ -1,4 +1,4 @@
-# Copyright 2023, 2024 HCL America
+# Copyright 2023, 2026 HCL America
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,11 +25,7 @@ $ClientType = "github-dast-$Os-$env:GITHUB_ACTION_REF"
 $global:SkipCert = $false
 
 if ($env:ACCEPTSSL -eq "true") {
-    Write-Host "ACCEPTSSL = true → SSL validation will be ignored (Non-Prod AppScan 360)"
     $global:SkipCert = $true
-}
-else {
-    Write-Host "SSL validation enabled (AppScan on Cloud / ASoC)"
 }
 
 # =================================
